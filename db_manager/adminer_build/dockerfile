@@ -1,0 +1,14 @@
+FROM adminer:latest
+USER root
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
+  php-pear \
+  php-dev \
+  openssl \
+  && pecl install -f mongodb \
+  && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
+  && cp /usr/share/php/pecl/mongodb/mongodb.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/ \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ENV TZ=Asia/Jakarta
+USER adminer
