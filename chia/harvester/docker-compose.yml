@@ -7,6 +7,7 @@ services:
     devices:
       - /dev/fuse:/dev/fuse
     volumes:
+      - /root/ca:/root/ca
       - ./mount/full-01.conf:/root/.worker/mount/full-01.conf
 
   harvester02:
@@ -15,6 +16,7 @@ services:
     devices:
       - /dev/fuse:/dev/fuse
     volumes:
+      - /root/ca:/root/ca
       - ./mount/full-02.conf:/root/.worker/mount/full-02.conf
 
   harvester03:
@@ -23,6 +25,7 @@ services:
     devices:
       - /dev/fuse:/dev/fuse
     volumes:
+      - /root/ca:/root/ca
       - ./mount/full-03.conf:/root/.worker/mount/full-03.conf
       - ./mount/new-01.conf:/root/.worker/mount/new-01.conf
       - ./mount/new-02.conf:/root/.worker/mount/new-02.conf
@@ -39,6 +42,7 @@ services:
     devices:
       - /dev/fuse:/dev/fuse
     volumes:
+      - /root/ca:/root/ca
       - ./mount/v1-01.conf:/root/.worker/mount/v1-01.conf
 
   harvester05:
@@ -47,6 +51,7 @@ services:
     devices:
       - /dev/fuse:/dev/fuse
     volumes:
+      - /root/ca:/root/ca
       - ./mount/v1-02.conf:/root/.worker/mount/v1-02.conf
 
   harvester06:
@@ -55,4 +60,5 @@ services:
     devices:
       - /dev/fuse:/dev/fuse
     volumes:
+      - /root/ca:/root/ca
       - ./mount/v1-03.conf:/root/.worker/mount/v1-03.conf
