@@ -35,6 +35,11 @@ if [ "$(grep -c "^root             hard     nofile         65535$" /etc/security
   echo "root             hard     nofile         65535" >>/etc/security/limits.conf
 fi
 
+# add line /etc/sysctl.conf if not exist
+if [ "$(grep -c "^fs.file-max = 6816768$" /etc/sysctl.conf)" -eq 0 ]; then
+  echo "fs.file-max = 6816768" >>/etc/sysctl.conf
+fi
+
 if [[ ! -d "/root/ca" ]]; then
   echo "no ca directory found"
   exit 1

@@ -41,7 +41,7 @@ chia configure --log-level INFO
 yq -i '.self_hostname = "0.0.0.0"' "$CHIA_ROOT/config/config.yaml"
 yq -i '.harvester.recursive_plot_scan = true' "$CHIA_ROOT/config/config.yaml"
 
-chia start node wallet
+chia start harvester -r
 
 function syncAllWallet() {
   while true; do
