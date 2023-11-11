@@ -51,5 +51,16 @@ RUN apt install -y tzdata && \
 RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+#copy scripts
+COPY docker-start.sh /usr/local/bin/
+COPY docker-entrypoint.sh /usr/local/bin/
+COPY docker-healthcheck.sh /usr/local/bin/
 
-CMD ["/bin/bash"]
+#set permissions
+RUN chmod +x /usr/local/bin/docker-*
+
+HEALTHCHECK --interval=5m --timeout=10s --start-period=20m \
+  CMD /bin/bash /usr/local/bin/docker-healthcheck.sh || exit 1
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["docker-start.sh"]

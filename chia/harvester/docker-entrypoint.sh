@@ -3,43 +3,6 @@ if [[ -n "${TZ}" ]]; then
   ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" >/etc/timezone
 fi
 
-if [ "$(grep -c "^*                soft     nproc          65535$" /etc/security/limits.conf)" -eq 0 ]; then
-  echo "*                soft     nproc          65535" >>/etc/security/limits.conf
-fi
-
-if [ "$(grep -c "^*                hard     nproc          65535$" /etc/security/limits.conf)" -eq 0 ]; then
-  echo "*                hard     nproc          65535" >>/etc/security/limits.conf
-fi
-
-if [ "$(grep -c "^*                soft     nofile         65535$" /etc/security/limits.conf)" -eq 0 ]; then
-  echo "*                soft     nofile         65535" >>/etc/security/limits.conf
-fi
-
-if [ "$(grep -c "^*                hard     nofile         65535$" /etc/security/limits.conf)" -eq 0 ]; then
-  echo "*                hard     nofile         65535" >>/etc/security/limits.conf
-fi
-
-if [ "$(grep -c "^root             soft     nproc          65535$" /etc/security/limits.conf)" -eq 0 ]; then
-  echo "root             soft     nproc          65535" >>/etc/security/limits.conf
-fi
-
-if [ "$(grep -c "^root             hard     nproc          65535$" /etc/security/limits.conf)" -eq 0 ]; then
-  echo "root             hard     nproc          65535" >>/etc/security/limits.conf
-fi
-
-if [ "$(grep -c "^root             soft     nofile         65535$" /etc/security/limits.conf)" -eq 0 ]; then
-  echo "root             soft     nofile         65535" >>/etc/security/limits.conf
-fi
-
-if [ "$(grep -c "^root             hard     nofile         65535$" /etc/security/limits.conf)" -eq 0 ]; then
-  echo "root             hard     nofile         65535" >>/etc/security/limits.conf
-fi
-
-# add line /etc/sysctl.conf if not exist
-if [ "$(grep -c "^fs.file-max = 6816768$" /etc/sysctl.conf)" -eq 0 ]; then
-  echo "fs.file-max = 6816768" >>/etc/sysctl.conf
-fi
-
 if [[ ! -d "/root/ca" ]]; then
   echo "no ca directory found"
   exit 1
@@ -52,26 +15,7 @@ if [[ ! -d /root/.worker/mount ]]; then
   exit 1
 fi
 
-function mountRclone() {
-  file=$1
-  mountId=$2
-
-}
-
-function mountConfig() {
-
-  ls -1 /root/.worker/mount/*.conf | while read file; do
-    rclone config show --config /root/.worker/mount/${file} | grep "MOUNT" | while read line; do
-      mountId=$(echo ${line} | awk '{print $2}')
-      mountRclone ${file} ${mountId}
-    done
-  done
-
-}
-
-function rcloneMountConfig() {
-  ls -1 /root/.worker/mount/*.conf | while read file; do
-    echo "rclone mount ${file}"
-
-  done
-}
+chia configure --log-level INFO
+yq -i '.self_hostname = "0.0.0.0"' "$CHIA_ROOT/config/config.yaml"
+yq -i '.harvester.recursive_plot_scan = true' "$CHIA_ROOT/config/config.yaml"
+yq -i ".harvester.farmer_peer.host = \"$FARMER_HOST\"" "$CHIA_ROOT/config/config.yaml"
