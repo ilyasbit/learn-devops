@@ -10,7 +10,7 @@ RUN apt update -y
 
 # Install dependencies
 RUN apt install -y --no-install-recommends \
-  wget ca-certificates curl gnupg git jq unzip sudo net-tools netcat-traditional
+  wget ca-certificates curl gnupg git jq nano htop nload unzip sudo net-tools netcat-traditional
 
 # Install chia-blockchain
 RUN dpkgArch="$(dpkg --print-architecture)"; \
