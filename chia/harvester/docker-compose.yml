@@ -1,7 +1,4 @@
 version: '3'
-x-environment:
-  - FARMER_HOST=node.fzl.my.id
-
 services:
   harvester01:
     privileged: true
@@ -12,7 +9,7 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
-      - ./mount/full-01.conf:/root/.worker/mount/full-01.conf
+      - ./mount/full1.conf:/root/.worker/mount/full1.conf
 
   harvester02:
     privileged: true
@@ -23,7 +20,7 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
-      - ./mount/full-02.conf:/root/.worker/mount/full-02.conf
+      - ./mount/full2.conf:/root/.worker/mount/full2.conf
 
   harvester03:
     privileged: true
@@ -34,15 +31,15 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
-      - ./mount/full-03.conf:/root/.worker/mount/full-03.conf
-      - ./mount/new-01.conf:/root/.worker/mount/new-01.conf
-      - ./mount/new-02.conf:/root/.worker/mount/new-02.conf
-      - ./mount/new-03.conf:/root/.worker/mount/new-03.conf
-      - ./mount/new-04.conf:/root/.worker/mount/new-04.conf
-      - ./mount/new-05.conf:/root/.worker/mount/new-05.conf
-      - ./mount/new-06.conf:/root/.worker/mount/new-06.conf
-      - ./mount/new-07.conf:/root/.worker/mount/new-07.conf
-      - ./mount/new-08.conf:/root/.worker/mount/new-08.conf
+      - ./mount/full3.conf:/root/.worker/mount/full3.conf
+      - ./mount/001.conf:/root/.worker/mount/001.conf
+      - ./mount/002.conf:/root/.worker/mount/002.conf
+      - ./mount/003.conf:/root/.worker/mount/003.conf
+      - ./mount/004.conf:/root/.worker/mount/004.conf
+      - ./mount/005.conf:/root/.worker/mount/005.conf
+      - ./mount/006.conf:/root/.worker/mount/006.conf
+      - ./mount/007.conf:/root/.worker/mount/007.conf
+      - ./mount/008.conf:/root/.worker/mount/008.conf
 
   harvester04:
     privileged: true
@@ -53,7 +50,7 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
-      - ./mount/v1-01.conf:/root/.worker/mount/v1-01.conf
+      - ./mount/new1.conf:/root/.worker/mount/new1.conf
 
   harvester05:
     privileged: true
@@ -64,7 +61,7 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
-      - ./mount/v1-02.conf:/root/.worker/mount/v1-02.conf
+      - ./mount/new2.conf:/root/.worker/mount/new2.conf
 
   harvester06:
     privileged: true
@@ -75,4 +72,4 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
-      - ./mount/v1-03.conf:/root/.worker/mount/v1-03.conf
+      - ./mount/new3.conf:/root/.worker/mount/new3.conf
