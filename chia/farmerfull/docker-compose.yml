@@ -1,6 +1,10 @@
 version: '3'
 services:
   farmerfull:
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
     image: farmerfull:latest
     ports:
       - '8555:8555'
@@ -11,7 +15,3 @@ services:
       - /root/.chia/mainnet/db:/root/.chia/mainnet/db
       - /root/ca:/root/ca
       - ./keyList.txt:/root/keyList.txt
-    ulimits:
-      nofile:
-        soft: 6816768
-        hard: 6816768
