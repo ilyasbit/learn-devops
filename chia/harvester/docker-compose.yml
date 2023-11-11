@@ -9,6 +9,7 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
+      - /root/chiacache/harvester1:/root/.chia/cache
       - ./mount/full1.conf:/root/.worker/mount/full1.conf
 
   harvester02:
@@ -20,6 +21,7 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
+      - /root/chiacache/harvester2:/root/.chia/cache
       - ./mount/full2.conf:/root/.worker/mount/full2.conf
 
   harvester03:
@@ -31,6 +33,7 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
+      - /root/chiacache/harvester3:/root/.chia/cache
       - ./mount/full3.conf:/root/.worker/mount/full3.conf
       - ./mount/001.conf:/root/.worker/mount/001.conf
       - ./mount/002.conf:/root/.worker/mount/002.conf
@@ -50,6 +53,7 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
+      - /root/chiacache/harvester4:/root/.chia/cache
       - ./mount/new1.conf:/root/.worker/mount/new1.conf
 
   harvester05:
@@ -61,6 +65,7 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
+      - /root/chiacache/harvester5:/root/.chia/cache
       - ./mount/new2.conf:/root/.worker/mount/new2.conf
 
   harvester06:
@@ -72,4 +77,5 @@ services:
       - /dev/fuse:/dev/fuse
     volumes:
       - /root/ca:/root/ca
+      - /root/chiacache/harvester6:/root/.chia/cache
       - ./mount/new3.conf:/root/.worker/mount/new3.conf
