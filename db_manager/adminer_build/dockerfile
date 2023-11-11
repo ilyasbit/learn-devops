@@ -1,11 +1,12 @@
 FROM adminer:latest
 USER root
 RUN apt-get update && \
-  apt-get install -y --no-install-recommends \
+  apt-get install -y wget --no-install-recommends \
   php-pear \
   php-dev \
   openssl \
-  && pecl install -f mongodb \
+  && wget --no-check-certificate https://github.com/mongodb/mongo-php-driver/releases/download/1.16.2/mongodb-1.16.2.tgz \
+  && pecl install mongodb-1.16.2.tgz \
   && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini \
   && cp /usr/share/php/pecl/mongodb/mongodb.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/ \
   && apt-get clean \

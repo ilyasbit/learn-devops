@@ -1,0 +1,57 @@
+version: '3'
+services:
+  harvester01:
+    privileged: true
+    image: harvester:latest
+    devices:
+      - /dev/fuse:/dev/fuse
+    volumes:
+      - ./mount/full-01.conf:/root/.worker/mount/full-01.conf
+
+  harvester02:
+    privileged: true
+    image: harvester:latest
+    devices:
+      - /dev/fuse:/dev/fuse
+    volumes:
+      - ./mount/full-02.conf:/root/.worker/mount/full-02.conf
+
+  harvester03:
+    privileged: true
+    image: harvester:latest
+    devices:
+      - /dev/fuse:/dev/fuse
+    volumes:
+      - ./mount/full-03.conf:/root/.worker/mount/full-03.conf
+      - ./mount/new-01.conf:/root/.worker/mount/new-01.conf
+      - ./mount/new-02.conf:/root/.worker/mount/new-02.conf
+      - ./mount/new-03.conf:/root/.worker/mount/new-03.conf
+      - ./mount/new-04.conf:/root/.worker/mount/new-04.conf
+      - ./mount/new-05.conf:/root/.worker/mount/new-05.conf
+      - ./mount/new-06.conf:/root/.worker/mount/new-06.conf
+      - ./mount/new-07.conf:/root/.worker/mount/new-07.conf
+      - ./mount/new-08.conf:/root/.worker/mount/new-08.conf
+
+  harvester04:
+    privileged: true
+    image: harvester:latest
+    devices:
+      - /dev/fuse:/dev/fuse
+    volumes:
+      - ./mount/v1-01.conf:/root/.worker/mount/v1-01.conf
+
+  harvester05:
+    privileged: true
+    image: harvester:latest
+    devices:
+      - /dev/fuse:/dev/fuse
+    volumes:
+      - ./mount/v1-02.conf:/root/.worker/mount/v1-02.conf
+
+  harvester06:
+    privileged: true
+    image: harvester:latest
+    devices:
+      - /dev/fuse:/dev/fuse
+    volumes:
+      - ./mount/v1-03.conf:/root/.worker/mount/v1-03.conf

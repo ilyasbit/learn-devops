@@ -1,0 +1,69 @@
+FROM ubuntu:22.04
+#setup Base ENV
+
+ENV CHIA_ROOT=/root/.chia/mainnet
+ENV TZ=Asia/Jakarta
+ENV healthcheck="true"
+ENV DEBIAN_FRONTEND=noninteractive
+# Update system
+RUN apt update -y
+
+# Install dependencies
+RUN apt install -y --no-install-recommends \
+  wget ca-certificates curl gnupg git jq unzip sudo net-tools netcat-traditional
+
+# Install chia-blockchain
+RUN dpkgArch="$(dpkg --print-architecture)"; \
+  if [ "$dpkgArch" = 'arm64' ]; then \
+  chiaInstaller="https://download.chia.net/latest/ARM64-Ubuntu-cli"; \
+  elif [ "$dpkgArch" = 'amd64' ]; then \
+  chiaInstaller="https://download.chia.net/latest/x86_64-Ubuntu-cli"; \
+  else \
+  echo "Unsupported architecture"; \
+  exit 1; \
+  fi; \
+  wget -O chia-blockchain.deb $chiaInstaller && \
+  dpkg -i chia-blockchain.deb && \
+  rm chia-blockchain.deb
+
+#install rclone
+RUN curl https://rclone.org/install.sh | bash
+
+#install yq
+RUN dpkgArch="$(dpkg --print-architecture)"; \
+  if [ "$dpkgArch" = 'arm64' ]; then \
+  yqBinary="https://github.com/mikefarah/yq/releases/download/v4.35.2/yq_linux_arm64"; \
+  elif [ "$dpkgArch" = 'amd64' ]; then \
+  yqBinary="https://github.com/mikefarah/yq/releases/download/v4.35.2/yq_linux_amd64"; \
+  else \
+  echo "Unsupported architecture"; \
+  exit 1; \
+  fi; \
+  wget -O /usr/bin/yq $yqBinary && \
+  chmod +x /usr/bin/yq
+
+# set Timezone
+RUN apt install -y tzdata && \
+  ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone && \
+  dpkg-reconfigure -f noninteractive tzdata
+
+#cleanup apt
+RUN apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#open up ports
+EXPOSE 8555 8444 8447 55400
+
+#copy scripts
+COPY docker-start.sh /usr/local/bin/
+COPY docker-entrypoint.sh /usr/local/bin/
+COPY docker-healthcheck.sh /usr/local/bin/
+
+#set permissions
+RUN chmod +x /usr/local/bin/docker-*
+
+HEALTHCHECK --interval=5m --timeout=10s --start-period=20m \
+  CMD /bin/bash /usr/local/bin/docker-healthcheck.sh || exit 1
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["docker-start.sh"]
