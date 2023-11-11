@@ -5,7 +5,7 @@ services:
     ports:
       - '8555:8555' # replace with the ports you want to expose
       - '8444:8444' # add more ports as needed
-      - '8447:8477'
+      - '8447:8447'
       - '55400:55400'
     volumes:
       - /root/.chia/mainnet/db:/root/.chia/mainnet/db
