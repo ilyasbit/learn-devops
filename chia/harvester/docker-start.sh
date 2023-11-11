@@ -9,7 +9,7 @@ function mountRclone() {
   echo "Mounting $remoteName to $mountpoint"
   rclone mount $remoteName $mountpoint \
     --allow-other \
-    --transfers 64 \
+    --transfers 32 \
     --vfs-read-chunk-size 64K \
     --buffer-size 0 \
     --vfs-read-wait 1ms \
