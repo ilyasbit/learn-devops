@@ -51,10 +51,5 @@ RUN apt install -y tzdata && \
 RUN apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-#set permissions
-RUN chmod +x /usr/local/bin/docker-*
-
-HEALTHCHECK --interval=5m --timeout=10s --start-period=20m \
-  CMD /bin/bash /usr/local/bin/docker-healthcheck.sh || exit 1
 
 CMD [/bin/bash]
