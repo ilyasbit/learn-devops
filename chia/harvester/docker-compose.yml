@@ -5,6 +5,8 @@ x-environment:
 services:
   harvester01:
     privileged: true
+    environment:
+      - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
     devices:
       - /dev/fuse:/dev/fuse
@@ -14,6 +16,8 @@ services:
 
   harvester02:
     privileged: true
+    environment:
+      - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
     devices:
       - /dev/fuse:/dev/fuse
@@ -23,6 +27,8 @@ services:
 
   harvester03:
     privileged: true
+    environment:
+      - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
     devices:
       - /dev/fuse:/dev/fuse
@@ -40,6 +46,8 @@ services:
 
   harvester04:
     privileged: true
+    environment:
+      - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
     devices:
       - /dev/fuse:/dev/fuse
@@ -49,6 +57,8 @@ services:
 
   harvester05:
     privileged: true
+    environment:
+      - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
     devices:
       - /dev/fuse:/dev/fuse
@@ -58,6 +68,8 @@ services:
 
   harvester06:
     privileged: true
+    environment:
+      - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
     devices:
       - /dev/fuse:/dev/fuse
