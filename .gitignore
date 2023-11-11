@@ -1,2 +1,3 @@
 chia/farmerfull/keyList.txt
 chia/harvester/mount/*
+harvester/.env
