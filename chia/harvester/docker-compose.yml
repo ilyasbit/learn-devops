@@ -2,6 +2,10 @@ version: '3'
 services:
   harvester01:
     privileged: true
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
     environment:
       - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
@@ -14,6 +18,10 @@ services:
 
   harvester02:
     privileged: true
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
     environment:
       - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
@@ -26,6 +34,10 @@ services:
 
   harvester03:
     privileged: true
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
     environment:
       - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
@@ -46,6 +58,10 @@ services:
 
   harvester04:
     privileged: true
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
     environment:
       - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
@@ -58,6 +74,10 @@ services:
 
   harvester05:
     privileged: true
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
     environment:
       - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest
@@ -70,6 +90,10 @@ services:
 
   harvester06:
     privileged: true
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
     environment:
       - FARMER_HOST=${FARMER_HOST}
     image: harvester:latest

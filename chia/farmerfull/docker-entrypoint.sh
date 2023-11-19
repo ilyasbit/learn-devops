@@ -41,25 +41,32 @@ chia configure --log-level INFO
 yq -i '.self_hostname = "0.0.0.0"' "$CHIA_ROOT/config/config.yaml"
 yq -i '.harvester.recursive_plot_scan = true' "$CHIA_ROOT/config/config.yaml"
 
-chia start node wallet -r
+chia start node -r
+if [[ -d /root/.chia/mainnet/wallet/db ]]; then
+  rm -rf /root/.chia/mainnet/wallet/db/*
+fi
 
 function syncAllWallet() {
   while true; do
     fullnodeSynced=$(chia rpc full_node get_blockchain_state | jq '.blockchain_state.sync.synced')
     if [[ "$fullnodeSynced" == "true" ]]; then
+      wait 10
       break
     fi
     echo "Waiting for fullnode sync"
     sleep 10
   done
+  chia start wallet farmer-only -r
+  wait 10
   chia rpc wallet get_public_keys | jq -r '.public_key_fingerprints[]' | while read fingerprint; do
     chia rpc wallet log_in "{ \"fingerprint\": $fingerprint }"
     while true; do
       walletSyncStatus=$(chia rpc wallet get_sync_status | jq -r '.synced')
       if [[ "$walletSyncStatus" == "true" ]]; then
-        break
         sleep 10
+        break
       fi
+      sleep 10
     done
   done
   firstWallet=$(chia rpc wallet get_public_keys | jq -r '.public_key_fingerprints[]' | head -n1)
