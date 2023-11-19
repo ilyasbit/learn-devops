@@ -50,14 +50,14 @@ function syncAllWallet() {
   while true; do
     fullnodeSynced=$(chia rpc full_node get_blockchain_state | jq '.blockchain_state.sync.synced')
     if [[ "$fullnodeSynced" == "true" ]]; then
-      wait 10
+      sleep 10
       break
     fi
     echo "Waiting for fullnode sync"
     sleep 10
   done
   chia start wallet farmer-only -r
-  wait 10
+  sleep 10
   chia rpc wallet get_public_keys | jq -r '.public_key_fingerprints[]' | while read fingerprint; do
     chia rpc wallet log_in "{ \"fingerprint\": $fingerprint }"
     while true; do
@@ -68,6 +68,7 @@ function syncAllWallet() {
       fi
       sleep 10
     done
+    sleep 10
   done
   firstWallet=$(chia rpc wallet get_public_keys | jq -r '.public_key_fingerprints[]' | head -n1)
   chia rpc wallet log_in "{ \"fingerprint\": $firstWallet }"
