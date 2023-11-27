@@ -1,0 +1,261 @@
+- include_tasks: packages.yml
+
+- name: Add or modify nofile soft limit for the wildcard (*) domain
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: soft
+    limit_item: nofile
+    value: 1048576
+
+- name: Add or modify nofile hard limit for the wildcard (*) domain
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: hard
+    limit_item: nofile
+    value: 1048576
+
+- name: Add or modify nofile soft limit for the root domain
+  community.general.pam_limits:
+    domain: root
+    limit_type: soft
+    limit_item: nofile
+    value: 1048576
+
+- name: Add or modify nofile hard limit for the root domain
+  community.general.pam_limits:
+    domain: root
+    limit_type: hard
+    limit_item: nofile
+    value: 1048576
+
+- name: add or modify nproc soft limit for the wildcard (*) domain
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: soft
+    limit_item: nproc
+    value: 1048576
+
+- name: add or modify nproc hard limit for the wildcard (*) domain
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: hard
+    limit_item: nproc
+    value: 1048576
+
+- name: add or modify nproc soft limit for the root domain
+  community.general.pam_limits:
+    domain: root
+    limit_type: soft
+    limit_item: nproc
+    value: 1048576
+
+- name: add or modify nproc hard limit for the root domain
+  community.general.pam_limits:
+    domain: root
+    limit_type: hard
+    limit_item: nproc
+    value: 1048576
+
+- name: check if swap size is more than 16GB
+  ansible.builtin.shell: free -m | grep Swap | awk '{print $2}'
+  register: swap_size
+  changed_when: false
+  failed_when: false
+
+- name: create swap file
+  ansible.builtin.shell: |
+    fallocate -l 16G /swapfile
+    chmod 600 /swapfile
+    mkswap /swapfile
+    swapon /swapfile
+    echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
+  when: swap_size.stdout | int <= 16384
+
+- name: change swappiness to 10
+  ansible.builtin.sysctl:
+    name: vm.swappiness
+    value: 10
+    state: present
+    reload: yes
+
+- name: change vfs_cache_pressure to 50
+  ansible.builtin.sysctl:
+    name: vm.vfs_cache_pressure
+    value: 50
+    state: present
+    reload: yes
+
+- name: check if chia-blockchain venv is installed
+  ansible.builtin.blockinfile:
+    path: /root/.bashrc
+    block: |
+      while [[ "$(which chia)" == "" ]]; do
+        . /opt/chia-blockchain/activate
+      done
+  register: chia_venv
+
+- name: check if chia-blockchain repo is installed
+  ansible.builtin.stat:
+    path: /opt/chia-blockchain
+  register: chia_installed
+
+- name: check chia-blockchain binary installed
+  ansible.builtin.stat:
+    path: /opt/chia-blockchain/venv/bin/
+  register: chia_binary
+
+- name: install and set custom chia-blockchain
+  block:
+    - name: Clone chia repository
+      ansible.builtin.git:
+        repo: https://github.com/Chia-Network/chia-blockchain
+        dest: /opt/chia-blockchain
+        version: 2.1.1
+        force: yes
+
+    - name: Copy install-plotter.sh
+      ansible.builtin.copy:
+        src: chia/assets/install-plotter.sh
+        dest: /opt/chia-blockchain/install-plotter.sh
+        mode: 0755
+
+    - name: Copy check_plots.py
+      ansible.builtin.copy:
+        src: chia/assets/check_plots.py
+        dest: /opt/chia-blockchain/chia/plotting/check_plots.py
+
+    - name: Install Chia
+      ansible.builtin.shell: |
+        cd /opt/chia-blockchain
+        DEBIAN_FRONTEND=noninteractive
+        . ./install.sh -p
+        . ./activate
+        chia init
+
+    - name: set venv chia on /root/.bashrc
+      ansible.builtin.blockinfile:
+        path: /root/.bashrc
+        block: |
+          while [[ "$(which chia)" == "" ]]; do
+            . /opt/chia-blockchain/activate
+          done
+  when: chia_binary.stat.exists == false and chia_venv.changed == true and chia_installed.stat.exists == false
+
+- name: check if all required directories are created
+  ansible.builtin.stat:
+    path: '{{ dir }}'
+  register: dir_exists
+  loop:
+    - /plots
+    - /temp1
+    - /temp2
+    - /chunk
+    - /mount_chunk
+    - '/root/.config/rclone'
+    - '/root/.worker/log'
+  loop_control:
+    loop_var: dir
+
+- name: create required directories if not exists
+  ansible.builtin.file:
+    path: '{{ item.dir }}'
+    state: directory
+    mode: '0755'
+  loop: '{{ dir_exists.results }}'
+  when: item.stat.exists == false
+
+- name: Check if rclone is installed
+  command: which rclone
+  register: rclone_installed
+  ignore_errors: true
+
+- name: Install rclone
+  ansible.builtin.shell: curl https://rclone.org/install.sh | sudo bash
+  when: rclone_installed.rc != 0
+
+- name: Copy rclone.conf
+  ansible.builtin.copy:
+    src: chia/assets/rclone.conf
+    dest: /root/.config/rclone/rclone.conf
+    mode: 0600
+
+- name: mount tempfs on /temp2
+  ansible.builtin.mount:
+    path: /temp2
+    src: tmpfs
+    fstype: tmpfs
+    opts: defaults,size=110G
+    state: mounted
+
+- name: 'Check if /mount_chunk is mounted from chunk:'
+  ansible.builtin.shell: mount | grep mount_chunk
+  register: mount_check
+  changed_when: false
+  failed_when: false
+
+- name: Mount /chunk on /mount_chunk if not already mounted
+  ansible.builtin.command: 'rclone mount chunk: /mount_chunk --daemon'
+  when: mount_check.stdout == ""
+
+- name: Copy plotter.sh
+  ansible.builtin.copy:
+    src: chia/assets/plotter.sh
+    dest: /root/plotter.sh
+    mode: 0755
+
+- name: Copy upload.sh
+  ansible.builtin.copy:
+    src: chia/assets/upload.sh
+    dest: /root/upload.sh
+    mode: 0755
+
+- name: copy clear_ram
+  ansible.builtin.copy:
+    src: chia/assets/clear_ram
+    dest: /usr/local/bin/clear_ram
+    mode: 0755
+
+- name: Ensure directory exists
+  ansible.builtin.file:
+    path: /root/.worker
+    state: directory
+
+- name: create empty env file
+  ansible.builtin.shell: echo "" > /root/.worker/env
+
+- name: saving env to ~/.worker/env file
+  ansible.builtin.blockinfile:
+    path: /root/.worker/env
+    block: |
+      BASEURL={{ BASEURL }}
+      APIKEY={{ APIKEY }}
+      PLOTTER={{ PLOTTER }}
+
+- name: clearup screen session
+  ansible.builtin.shell: screen -wipe
+  changed_when: false
+  failed_when: false
+
+- name: look for screen session called plotter
+  ansible.builtin.shell: screen -ls | grep plotter
+  register: screen_plotter
+  changed_when: false
+  failed_when: false
+
+- name: look for screen session called upload
+  ansible.builtin.shell: screen -ls | grep upload
+  register: screen_upload
+  changed_when: false
+  failed_when: false
+
+- name: run plotter on screen with env
+  ansible.builtin.shell: |
+    cd /root
+    screen -dmS plotter bash plotter.sh
+  when: screen_plotter.stdout == ""
+
+- name: run upload on screen with env
+  ansible.builtin.shell: |
+    cd /root
+    screen -dmS upload bash upload.sh
+  when: screen_upload.stdout == ""

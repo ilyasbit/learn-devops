@@ -1,3 +1,4 @@
-chia/farmerfull/keyList.txt
-chia/harvester/mount/*
-chia/harvester/.env
+docker/chia/farmerfull/keyList.txt
+docker/chia/harvester/mount/*
+docker/chia/harvester/.env
+ansible/chia/plotter/vars.yml

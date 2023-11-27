@@ -1,0 +1,12 @@
+- name: install packages
+  ansible.builtin.apt:
+    name:
+      - git
+      - jq
+      - nload
+      - htop
+      - screen
+      - nano
+      - btop
+      - progress
+    state: present

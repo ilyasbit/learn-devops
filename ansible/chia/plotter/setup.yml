@@ -1,0 +1,5 @@
+- hosts: plotter
+  var_files:
+    - vars.yml
+  roles:
+    - chia
