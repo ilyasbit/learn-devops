@@ -12,12 +12,23 @@ apiKey=$APIKEY
 chunkPath=/mount_chunk
 realPath=/chunk
 plotsDir=/plots
-
+chia plots add -d ${chunkPath}
 while true; do
   chunkPath=/mount_chunk
   realPath=/chunk
   plotsDir=/plots
   SECONDS=0
+  plotOnPlotDir=$(ls $plotsDir -1 | grep ".plot$" | wc -l | xargs)
+  plotOnChunk=$(rclone ls $chunkPath | grep ".plot$" | wc -l | xargs)
+  if [[ $plotOnChunk -eq 0 && $plotOnPlotDir -eq 0 ]]; then
+    echo "no plot file found"
+    sleep 60
+    continue
+  fi
+  if [[ $plotOnChunk -eq 0 ]]; then
+    rclone move $plotsDir/ ${chunkPath}/ --include="*.plot" --ignore-checksum --progress --transfers 20 --checkers 20
+  fi
+
   plotFile=$(rclone lsjson $chunkPath | jq '[.[] | select(.Name | endswith(".plot"))]')
   if [[ $plotFile == "[]" ]]; then
     plotFile=$(rclone lsjson $plotsDir | jq '[.[] | select(.Name | endswith(".plot"))]')
@@ -55,11 +66,10 @@ while true; do
     echo "file ${chunkPath}/${plotFile} size is less than 108000000000 Byte"
     continue
   fi
-
-  chunkDetail=$(rclone lsjson ${realPath} --include "${plotName}*")
+  chunkDetail=$(rclone lsjson ${realPath} --include "${plotName}.rclone_chunk*")
+  chunkHead=$(rclone lsjson ${realPath}/${plotName} | jq -r '.[].Name')
   chunkCount=$(echo $chunkDetail | jq length)
-  if [[ $chunkCount -eq 6 ]]; then
-    chunkHead=$(echo $chunkDetail | jq -r '.[] | select(.Name | endswith(".plot")) | .Name')
+  if [[ $chunkCount -eq 5 && "$chunkHead" != "null" ]]; then
     chunk001=$(echo $chunkDetail | jq -r '.[] | select(.Name | endswith("rclone_chunk.001")) | .Name')
     chunk002=$(echo $chunkDetail | jq -r '.[] | select(.Name | endswith("rclone_chunk.002")) | .Name')
     chunk003=$(echo $chunkDetail | jq -r '.[] | select(.Name | endswith("rclone_chunk.003")) | .Name')
@@ -67,13 +77,13 @@ while true; do
     chunk005=$(echo $chunkDetail | jq -r '.[] | select(.Name | endswith("rclone_chunk.005")) | .Name')
     #check if all chunk variable is exist
     if [[ -z $chunkHead || -z $chunk001 || -z $chunk002 || -z $chunk003 || -z $chunk004 || -z $chunk005 ]]; then
-      echo "file $plot_name | chunk file not found"
-      #rclone delete $local_chunk_profile: --include ${plot_name}*
+      echo "file $plotName | chunk file not found"
+      rclone delete $realPath/ --include ${plotName}*
       continue
     fi
     echo "file ${chunkPath}/${plotFile} valid plot file has 6 chunk"
 
-    chunkHeadSize=$(echo $chunkDetail | jq -r --arg chunkHead "$chunkHead" '.[] | select(.Name == $chunkHead) | .Size')
+    chunkHeadSize=$(rclone lsjson ${realPath}/${plotName} | jq -r '.[].Size')
     chunk001Size=$(echo $chunkDetail | jq -r --arg chunk01 "$chunk001" '.[] | select(.Name == $chunk01) | .Size')
     chunk002Size=$(echo $chunkDetail | jq -r --arg chunk02 "$chunk002" '.[] | select(.Name == $chunk02) | .Size')
     chunk003Size=$(echo $chunkDetail | jq -r --arg chunk03 "$chunk003" '.[] | select(.Name == $chunk03) | .Size')
@@ -81,8 +91,8 @@ while true; do
     chunk005Size=$(echo $chunkDetail | jq -r --arg chunk05 "$chunk005" '.[] | select(.Name == $chunk05) | .Size')
     totalChunkSize=$(($chunk001Size + $chunk002Size + $chunk003Size + $chunk004Size + $chunk005Size))
   else
-    echo "file $plot_name | chunk file not found"
-    #rclone delete $local_chunk_profile: --include ${plot_name}*
+    echo "file $plotName | chunk file not found"
+    rclone delete $realPath/ --include ${plotName}*
     continue
   fi
 
@@ -92,11 +102,12 @@ while true; do
   fi
   echo "file ${chunkPath}/${plotFile} valid plot file has 6 chunk and total chunk size is equal to plot size"
   #get FarmerPublicKey and ContractAddress
-  /chia-blockchain/venv/bin/chia plots check -n 0 -g ${plotFile} >/dev/null 2>/tmp/${plotFile}.txt
+
+  chia plots check -n 0 -g ${plotFile} >/dev/null 2>/tmp/${plotFile}.txt
   sleep 5
   farmerPublicKey=$(cat -v /tmp/${plotFile}.txt | grep "Farmer public key:" | rev | cut -d ":" -f1 | xargs | rev | cut -d "^" -f1 | xargs)
   contractAddress=$(cat -v /tmp/${plotFile}.txt | grep "Pool contract address:" | rev | cut -d ":" -f1 | xargs | rev | cut -d "^" -f1 | xargs)
-  workerIpAddress=$(curl ipinfo.io/ip)
+  workerIpAddress=$(curl ipinfo.io | jq -r '.ip')
   chunkData=$(
     cat <<EOF
 {
@@ -177,7 +188,9 @@ EOF
       #gatewayPid=$!
       sleep 3
       rclone copy /tmp/${randFile} ${storjId}CRYPT:demo-bucket
+      sleep 6
       rclone copy /tmp/${randFile}_2 ${storjId}CRYPT:demo-bucket
+      sleep 6
       tempOnStorj=$(rclone lsjson ${storjId}CRYPT:demo-bucket --include ${randFile})
       tempOnStorj2=$(rclone lsjson ${storjId}CRYPT:demo-bucket --include ${randFile}_2)
       if [[ $(echo $tempOnStorj | jq '. | length') -eq 0 ]]; then
@@ -191,8 +204,9 @@ EOF
         continue
       fi
       rclone delete ${storjId}CRYPT:demo-bucket --include ${randFile}
+      sleep 6
       rclone delete ${storjId}CRYPT:demo-bucket --include ${randFile}_2
-      sleep 3
+      sleep 6
       listBucket=$(rclone lsd ${storjId^^}:)
       buckets=()
 

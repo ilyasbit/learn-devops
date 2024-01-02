@@ -66,7 +66,7 @@ while true; do
         plottercmd="$plottercmd -2 $temp2/"
       fi
     elif [[ $plotter == "bladebit" ]]; then
-      plottercmd="chia plotters bladebit -t $core -f $farmer_Public_key -c $contract_address ramplot $plotdir/"
+      plottercmd="chia plotters bladebit ramplot -r $core -f $farmer_Public_key -c $contract_address -d $plotdir/"
     fi
   else
     echo "[ $(date "+%H:%M:%S") ] Plotting Limit Reached"

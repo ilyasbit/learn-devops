@@ -1,3 +1,2 @@
 [plotter]
-plotter1.fzl.my.id ansible_host=65.21.77.236
-plotter2.fzl.my.id ansible_host=65.21.141.236
+plotter1 ansible_host=18.184.194.236
