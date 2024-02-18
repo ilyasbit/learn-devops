@@ -1,3 +1,6 @@
+- name: Gather facts
+  setup:
+
 - include_tasks: packages.yml
 
 - name: Add or modify nofile soft limit for the wildcard (*) domain
@@ -74,7 +77,7 @@
     mkswap /swapfile
     swapon /swapfile
     echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
-  when: swap_size.stdout | int <= 16384
+  when: swap_size.stdout | int <= 16000
 
 - name: change swappiness to 10
   ansible.builtin.sysctl:
@@ -114,62 +117,35 @@
     path: /usr/local/bin/yq
   register: yq_installed
 
-- name: install yq
+- name: install yq for amd64
   ansible.builtin.shell: |
     wget https://github.com/mikefarah/yq/releases/download/v4.40.4/yq_linux_amd64 -O /usr/local/bin/yq
     chmod +x /usr/local/bin/yq
-  when: yq_installed.stat.exists == false
+  when: ansible_architecture == "x86_64" and yq_installed.stat.exists == false
 
-- name: install and set custom chia-blockchain
-  block:
-    - name: Clone chia repository
-      ansible.builtin.git:
-        repo: https://github.com/Chia-Network/chia-blockchain
-        dest: /opt/chia-blockchain
-        version: 2.1.1
-        force: yes
+- name: install yq for arm64
+  ansible.builtin.shell: |
+    wget https://github.com/mikefarah/yq/releases/download/v4.40.4/yq_linux_arm64 -O /usr/local/bin/yq
+    chmod +x /usr/local/bin/yq
+  when: ansible_architecture == "aarch64" and yq_installed.stat.exists == false
 
-    - name: Copy install-plotter.sh
-      ansible.builtin.copy:
-        src: chia/assets/install-plotter.sh
-        dest: /opt/chia-blockchain/install-plotter.sh
-        mode: 0755
-
-    - name: Copy check_plots.py
-      ansible.builtin.copy:
-        src: chia/assets/check_plots.py
-        dest: /opt/chia-blockchain/chia/plotting/check_plots.py
-
-    - name: Install Chia
-      ansible.builtin.shell: |
-        cd /opt/chia-blockchain
-        DEBIAN_FRONTEND=noninteractive
-        bash install.sh -p
-        . ./activate
-        chia init && chia plots add -d /mount_chunk
-        yq -i '.harvester.recursive_plot_scan = true' ~/.chia/mainnet/config/config.yaml
-
-    - name: set venv chia on /root/.bashrc
-      ansible.builtin.blockinfile:
-        path: /root/.bashrc
-        block: |
-          while [[ "$(which chia)" == "" ]]; do
-            . /opt/chia-blockchain/activate
-          done
-  when: chia_binary.stat.exists == false and chia_venv.changed == true and chia_installed.stat.exists == false
+- name: copy ca dir to /root/
+  ansible.builtin.copy:
+    src: main/assets/ca
+    dest: /root/
+    mode: 0755
 
 - name: check if all required directories are created
   ansible.builtin.stat:
     path: '{{ dir }}'
   register: dir_exists
   loop:
-    - /plots
-    - /temp1
-    - /temp2
-    - /chunk
-    - /mount_chunk
-    - '/root/.config/rclone'
-    - '/root/.worker/log'
+    - /root/.config/rclone
+    - /root/.worker
+    - /root/.worker/mount
+    - /root/.worker/log
+    - /root/.worker/log/mount
+    - /storj-bucket
   loop_control:
     loop_var: dir
 
@@ -180,6 +156,53 @@
     mode: '0755'
   loop: '{{ dir_exists.results }}'
   when: item.stat.exists == false
+
+- name: install and set custom chia-blockchain
+  block:
+    - name: Clone chia repository
+      ansible.builtin.git:
+        repo: https://github.com/Chia-Network/chia-blockchain
+        dest: /opt/chia-blockchain
+        version: 2.1.4
+        force: yes
+
+    - name: Copy install-plotter.sh
+      ansible.builtin.copy:
+        src: main/assets/install-plotter.sh
+        dest: /opt/chia-blockchain/install-plotter.sh
+        mode: 0755
+
+    - name: Copy check_plots.py
+      ansible.builtin.copy:
+        src: main/assets/check_plots.py
+        dest: /opt/chia-blockchain/chia/plotting/check_plots.py
+
+    - name: Install Chia
+      ansible.builtin.shell: |
+        cd /opt/chia-blockchain
+        DEBIAN_FRONTEND=noninteractive
+        bash install.sh -p
+        . ./activate
+        chia init -c /root/ca && chia plots add -d /storj-bucket
+        chia configure --set-farmer-peer {{ FARMEROST }}:{{ FARMERPORT }}
+        chia configure --set-log-level INFO
+        yq -i '.harvester.recursive_plot_scan = true' ~/.chia/mainnet/config/config.yaml
+
+    - name: set venv chia on /root/.bashrc
+      ansible.builtin.blockinfile:
+        path: /root/.bashrc
+        block: |
+          while [[ "$(which chia)" == "" ]]; do
+            . /opt/chia-blockchain/activate
+          done
+
+  when: chia_binary.stat.exists == false and chia_venv.changed == true and chia_installed.stat.exists == false
+
+- name: add alias flog to bashrc
+  ansible.builtin.blockinfile:
+    path: /root/.bashrc
+    block: |
+      alias flog='tail -f /root/.chia/mainnet/log/debug.log'
 
 - name: Check if rclone is installed
   command: which rclone
@@ -192,53 +215,13 @@
 
 - name: Copy rclone.conf
   ansible.builtin.copy:
-    src: chia/assets/rclone.conf
+    src: main/assets/rclone.conf
     dest: /root/.config/rclone/rclone.conf
     mode: 0600
 
-- name: get total ram
-  ansible.builtin.shell: free -m | grep Mem | awk '{print $2}'
-  register: total_ram
-  changed_when: false
-
-- name: output total_ram
-  ansible.builtin.debug:
-    msg: '{{ total_ram.stdout }}'
-
-- name: mount tempfs on /temp2
-  ansible.builtin.mount:
-    path: /temp2
-    src: tmpfs
-    fstype: tmpfs
-    opts: defaults,size=110G
-    state: mounted
-  when: total_ram.stdout | int >= 110000
-
-- name: 'Check if /mount_chunk is mounted from chunk:'
-  ansible.builtin.shell: mount | grep mount_chunk
-  register: mount_check
-  changed_when: false
-  failed_when: false
-
-- name: Mount /chunk on /mount_chunk if not already mounted
-  ansible.builtin.command: 'rclone mount chunk: /mount_chunk --daemon'
-  when: mount_check.stdout == ""
-
-- name: Copy plotter.sh
-  ansible.builtin.copy:
-    src: chia/assets/plotter.sh
-    dest: /root/plotter.sh
-    mode: 0755
-
-- name: Copy upload.sh
-  ansible.builtin.copy:
-    src: chia/assets/upload.sh
-    dest: /root/upload.sh
-    mode: 0755
-
 - name: copy clear_ram
   ansible.builtin.copy:
-    src: chia/assets/clear_ram
+    src: main/assets/clear_ram
     dest: /usr/local/bin/clear_ram
     mode: 0755
 
@@ -257,32 +240,23 @@
       BASEURL={{ BASEURL }}
       APIKEY={{ APIKEY }}
       PLOTTER={{ PLOTTER }}
+      FARMEROST={{ FARMEROST }}
+      FARMERPORT={{ FARMERPORT }}
+      CACHESIZE={{ CACHESIZE }}
 
-- name: clearup screen session
-  ansible.builtin.shell: screen -wipe
-  changed_when: false
-  failed_when: false
+- name: copy mountRclone.sh to /root/
+  ansible.builtin.copy:
+    src: main/assets/mountRclone.sh
+    dest: /root/mountRclone.sh
+    mode: 0755
 
-- name: look for screen session called plotter
-  ansible.builtin.shell: screen -ls | grep plotter
-  register: screen_plotter
-  changed_when: false
-  failed_when: false
-
-- name: look for screen session called upload
-  ansible.builtin.shell: screen -ls | grep upload
-  register: screen_upload
-  changed_when: false
-  failed_when: false
-
-- name: run plotter on screen with env
-  ansible.builtin.shell: |
-    cd /root
-    screen -dmS plotter bash plotter.sh
-  when: screen_plotter.stdout == ""
-
-- name: run upload on screen with env
-  ansible.builtin.shell: |
-    cd /root
-    screen -dmS upload bash upload.sh
-  when: screen_upload.stdout == ""
+- name: Copy directory to host
+  ansible.builtin.copy:
+    src: 'main/assets/mount/{{ item }}/.'
+    dest: '/root/.worker/mount/'
+    mode: 0755
+  loop:
+    - hvr1
+    - hvr2
+    - hvr3
+  when: inventory_hostname == item

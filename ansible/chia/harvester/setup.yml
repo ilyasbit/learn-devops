@@ -1,4 +1,4 @@
-- hosts: plotter
+- hosts: harvester
   vars_files:
     - vars.yml
   roles:

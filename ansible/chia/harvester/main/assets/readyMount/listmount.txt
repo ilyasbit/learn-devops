@@ -1,0 +1,190 @@
+================================================================
+hvr1
+================================================================
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f98025.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f9821e.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f98417.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f98610.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f98809.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f98a02.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f98bfb.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f98df4.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f98fed.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f991e6.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f993df.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f995d8.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f997d1.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f999ca.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f99bc3.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f99dbc.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f99fb5.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f9a1ae.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f9a3a7.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f9a5a0.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f9a799.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f9a992.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f9ab8b.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f2f62c46d3835f9ad84.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f3062c46d3835f9af7d.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f3062c46d3835f9b176.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f3062c46d3835f9b36f.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f3062c46d3835f9b568.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f3062c46d3835f9b761.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f3062c46d3835f9b95a.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f3062c46d3835f9bb53.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f3062c46d3835f9bd4c.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_100_65724f3062c46d3835f9bf45.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_chunk_45_65724f3062c46d3835f9c02b.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa35ed1ec0e2e331349f2.conf ~/.worker/mount/
+================================================================
+hvr2
+================================================================
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa35fd1ec0e2e331349f7.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa35fd1ec0e2e331349fc.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa360d1ec0e2e33134a01.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa361d1ec0e2e33134a06.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa362d1ec0e2e33134a0b.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa363d1ec0e2e33134a10.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa364d1ec0e2e33134a15.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa365d1ec0e2e33134a1a.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa366d1ec0e2e33134a1f.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa367d1ec0e2e33134a24.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa367d1ec0e2e33134a29.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa368d1ec0e2e33134a2e.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa369d1ec0e2e33134a33.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa36ad1ec0e2e33134a38.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa36bd1ec0e2e33134a3d.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa36cd1ec0e2e33134a42.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa36dd1ec0e2e33134a47.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa36ed1ec0e2e33134a4c.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa36fd1ec0e2e33134a51.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa370d1ec0e2e33134a56.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa370d1ec0e2e33134a5b.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa371d1ec0e2e33134a60.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa372d1ec0e2e33134a65.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa373d1ec0e2e33134a6a.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa374d1ec0e2e33134a6f.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa375d1ec0e2e33134a74.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa376d1ec0e2e33134a79.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa377d1ec0e2e33134a7e.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa378d1ec0e2e33134a83.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_100_656fa379d1ec0e2e33134a88.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd19_full_2_656fa37ad1ec0e2e33134a8d.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd1b_full_100_656fa37bd1ec0e2e33134a93.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfa6f96f721eca2bd1b_full_86_656fa37cd1ec0e2e33134a98.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd1d_full_100_656fa37dd1ec0e2e33134a9e.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd1d_full_74_656fa37ed1ec0e2e33134aa3.conf ~/.worker/mount/
+================================================================
+hvr3
+================================================================
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa394d1ec0e2e33134afa.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa395d1ec0e2e33134aff.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa396d1ec0e2e33134b04.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa397d1ec0e2e33134b09.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa398d1ec0e2e33134b0e.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa398d1ec0e2e33134b13.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa399d1ec0e2e33134b18.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa39ad1ec0e2e33134b1d.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa39dd1ec0e2e33134b22.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa39ed1ec0e2e33134b27.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa39fd1ec0e2e33134b2c.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa3a1d1ec0e2e33134b31.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa3a2d1ec0e2e33134b36.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa3a3d1ec0e2e33134b3b.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_100_656fa3a5d1ec0e2e33134b40.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd21_full_20_656fa3a6d1ec0e2e33134b45.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd23_full_100_656fa3a7d1ec0e2e33134b4b.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd23_full_100_656fa3a9d1ec0e2e33134b50.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd23_full_100_656fa3aad1ec0e2e33134b55.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd23_full_100_656fa3abd1ec0e2e33134b5a.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfb6f96f721eca2bd23_full_84_656fa3acd1ec0e2e33134b5f.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfc6f96f721eca2bd25_full_75_656fa3aed1ec0e2e33134b65.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfc6f96f721eca2bd27_full_100_656fa3afd1ec0e2e33134b6b.conf ~/.worker/mount/
+cp ~/readyMount/656c1bfc6f96f721eca2bd27_full_73_656fa3b0d1ec0e2e33134b70.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d029e.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d04fb.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d0758.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d09b5.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d0c12.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d0e6f.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d10cc.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d1329.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d1586.conf ~/.worker/mount/
+cp ~/readyMount/65c112e481b89b24c67d17e3.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d1c9d.conf ~/.worker/mount/
+================================================================
+hvr4
+================================================================
+cp ~/readyMount/65c112e581b89b24c67d1a40.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d1efa.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d2157.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d23b4.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d2611.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d286e.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d2acb.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d2d28.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d2f85.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d31e2.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d343f.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d369c.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d38f9.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d3b56.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d3db3.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d4010.conf ~/.worker/mount/
+cp ~/readyMount/65c112e581b89b24c67d426d.conf ~/.worker/mount/
+================================================================
+nomount
+================================================================
+65bc8d165abc3efbf44ec57f.conf
+65bc8d165abc3efbf44ec7dc.conf
+65bc8d165abc3efbf44eca39.conf
+65bc8d165abc3efbf44ecc96.conf
+65bc8d165abc3efbf44ecef3.conf
+65bc8d165abc3efbf44ed150.conf
+65bc8d165abc3efbf44ed3ad.conf
+65bc8d165abc3efbf44ed60a.conf
+65bc8d165abc3efbf44ed867.conf
+65bc8d165abc3efbf44edac4.conf
+65bc8d165abc3efbf44edd21.conf
+65bc8d165abc3efbf44edf7e.conf
+65bc8d165abc3efbf44ee1db.conf
+================================================================
+65718990a4a611cb4466be23.conf
+6576c180a4a611cb44677daa.conf
+65784b40a4a611cb4467eabf.conf
+6579f120a4a611cb44683c4b.conf
+657b88f0a4a611cb44688d76.conf
+657d12b0a4a611cb4468dd4c.conf
+657eaa80a4a611cb44692ef2.conf
+65803440a4a611cb44697c95.conf
+65821260a4a611cb446a0714.conf
+6585cea0a4a611cb446a8338.conf
+6587d6f0a4a611cb446add79.conf
+6589df40a4a611cb446b3697.conf
+658be790a4a611cb446b9083.conf
+658defe0a4a611cb446bea85.conf
+658ff830a4a611cb446c43e5.conf
+6591e460a4a611cb446c9afb.conf
+6592e180a4a611cb446ce43f.conf
+65938a40a4a611cb446d21fa.conf
+659505f0150a4a3f66c12115.conf
+6596f220150a4a3f66c1a10d.conf
+listmount.txt
+newchunk_653ba640b354da17c16fb6a1.conf
+newchunk_653bb450b354da17c16fc282.conf
+newchunk_653bc260b354da17c16fccdd.conf
+newchunk_653bd070b354da17c16fd8f1.conf
+newchunk_653bde80b354da17c16fe44b.conf
+newchunk_653bec90b354da17c16ff003.conf
+newchunk_653bfaa0b354da17c16ffb11.conf
+newchunk_653e2d20064a9a9dd26527fe.conf
+newchunk_6563f820199b72ef308f0497.conf
+newchunk_6566d360199b72ef308f6773.conf
+newchunk_6568f7d0199b72ef308fd21c.conf
+newchunk_656ae400a4a611cb446448ca.conf
+newchunk_656c1960a4a611cb44650849.conf
+newchunk_656d5cd0a4a611cb4465f685.conf
+newchunk_656ed880a4a611cb44664346.conf
+
+========================================
+

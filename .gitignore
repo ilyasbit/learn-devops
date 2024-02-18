@@ -2,6 +2,9 @@ docker/chia/farmerfull/keyList.txt
 docker/chia/harvester/mount/*
 docker/chia/harvester/.env
 ansible/chia/plotter/vars.yml
-ansible/chia/harvester/main/assets/mount/*
+#ansible/chia/harvester/main/assets/mount/*
 ansible/chia/harvester/main/assets/ca/*
 **/vars.yml
+#**/mount/*
+**/ca/*
+#**/readyMount/*
