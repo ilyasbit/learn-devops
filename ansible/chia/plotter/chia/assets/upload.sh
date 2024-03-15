@@ -221,6 +221,17 @@ EOF
       for bucket in "${buckets[@]}"; do
         rclone delete ${storjId^^}CRYPT:${bucket}
       done
+      randNum=$(shuf -i 3-8 -n 1)
+      mkdir -p /tmp/${storjId}
+      for ((i = 0; i < $randNum; i++)); do
+        randFileName=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+        randBytes=$(shuf -i 100-200 -n 1)
+        fallocate -l ${randBytes}K /tmp/${storjId}/${randFileName}
+      done
+      rclone mkdir ${storjId^^}_CRYPT:demo-bucket --retries 1
+      rclone copy /tmp/${storjId}/ ${storjId^^}_CRYPT:demo-bucket --retries 1 --transfers 10 --checkers 10 --log-file /tmp/${storjId}.log
+      rm -rf /tmp/${storjId}
+      rm -rf /tmp/${storjId}.log
       rclone mkdir ${storjId^^}CRYPT:demo-bucket
       rclone move ${realPath}/${fileName} ${storjId}CRYPT:demo-bucket --s3-disable-checksum --progress
       if [[ $? -ne 0 ]]; then

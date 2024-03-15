@@ -1,3 +1,6 @@
 BASEURL: site.com
 APIKEY: apikey
 PLOTTER: madmax
+FARMEROST: newpanel.fzl.my.id
+FARMERPORT: 8440
+CACHESIZE: 3G
